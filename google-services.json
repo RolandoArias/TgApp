@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "361900939499",
+    "project_id": "tgapp-7efa3",
+    "storage_bucket": "tgapp-7efa3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:361900939499:android:8f3ac4982a73486f3946ae",
+        "android_client_info": {
+          "package_name": "com.tiendagalo.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "361900939499-t02kiibs7jtb09a8bhk1ie8e9eeee7o1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDIwdmOJfGdxqmWZqkNuMk1rXMpum1CCqc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "361900939499-e2gr8mae61rh2m9j4nt0cinj8gjgp229.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

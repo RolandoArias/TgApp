@@ -1,20 +1,46 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import * as React from 'react';
+import { LogBox, StatusBar } from 'react-native';
+import { useFonts } from 'expo-font';
 
-export default function App() {
+import * as SplashScreen from 'expo-splash-screen';
+
+
+import RootApp from './src/navigation/RootApp';
+
+const App = () => {
+  /** Ignore Yellow Box Warning */
+  LogBox.ignoreAllLogs();
+
+  let [fontsLoaded] = useFonts({
+    Montserrat: require('./assets/fonts/Montserrat.ttf'),
+  });
+
+  React.useEffect(() => {
+    async function prepareApp() {
+      try {
+        await SplashScreen.preventAutoHideAsync();
+      } catch (e) {
+        console.warn(e);
+      } finally {
+        if (fontsLoaded) {
+          await SplashScreen.hideAsync();
+        }
+      }
+    }
+
+    prepareApp();
+  }, [fontsLoaded]);
+
+  if (!fontsLoaded) {
+    return null;
+  }
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <>
+        <StatusBar hidden />
+        <RootApp />
+    </>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
