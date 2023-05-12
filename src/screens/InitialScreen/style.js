@@ -1,38 +1,33 @@
-import * as React from 'react';
-import { 
-    StyleSheet
-} from 'react-native';
-import Constants from 'expo-constants';
+import { StyleSheet } from "react-native";
+import Constants from "expo-constants";
 
-import GlobalVars from '../../global/globalVars';
+import GlobalVars from "../../global/globalVars";
 
 const Styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
 
-    container: {
-        flex: 1,
-    },
+  viewLogin: {
+    backgroundColor: GlobalVars.fondoPrincipal,
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
 
-    viewLogin: {
-        backgroundColor: GlobalVars.fondoPrincipal,
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-    },
+  scrollView: {
+    backgroundColor: "transparent",
+    width: "100%",
+  },
 
-    scrollView: {
-        backgroundColor: 'transparent',
-        width: '100%',
-    },
-
-    contentContainer: {
-        paddingTop: Constants.statusBarHeight,
-        paddingBottom: 30,
-        paddingHorizontal: 20,
-        justifyContent: 'center', 
-        alignItems: 'center', 
-        alignContent: 'center',
-    },
-
+  contentContainer: {
+    paddingTop: Constants.statusBarHeight,
+    paddingBottom: 30,
+    paddingHorizontal: 20,
+    justifyContent: "center",
+    alignItems: "center",
+    alignContent: "center",
+  },
 });
 
 export default Styles;
