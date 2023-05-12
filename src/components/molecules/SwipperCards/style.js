@@ -1,49 +1,44 @@
-import * as React from 'react';
-import { 
-    StyleSheet
-} from 'react-native';
-import Constants from 'expo-constants';
+import { StyleSheet } from "react-native";
 
-import GlobalVars from '../../../global/globalVars';
+import GlobalVars from "../../../global/globalVars";
 
 const Styles = StyleSheet.create({
+  wrapper: {},
 
-    wrapper: {
-    },
+  rootView: {
+    width: "100%",
+    height: GlobalVars.windowHeight < 600 ? 600 : GlobalVars.windowHeight / 1.35,
+    justifyContent: "center",
+    alignItems: "center",
+    alignContent: "center",
+    flex: 1,
+  },
 
-    rootView: {
-        width: '100%',
-        height: GlobalVars.windowHeight < 600 ? 600 : GlobalVars.windowHeight/1.2,
-        justifyContent: 'center', 
-        alignItems: 'center', 
-        alignContent: 'center',
-        flex: 1,
-    },  
+  slide1: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
 
-    slide1: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
+  slide2: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
 
-    slide2: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
+  stretch: {
+    width: GlobalVars.windowWidth / 5,
+    height: GlobalVars.windowHeight / 10,
+    borderRadius: 15,
+    resizeMode: "contain",
+    marginBottom: 20,
+  },
 
-    stretch: {
-        width: 100,
-        height: 100,
-        borderRadius: 15,
-        resizeMode: 'stretch',
-        marginBottom: 20,
-    },
-
-    normal: {
-
-    },
-
+  normal: {
+    width: GlobalVars.windowWidth / 2,
+    height: GlobalVars.windowHeight / 4,
+    resizeMode: "contain",
+  },
 });
 
 export default Styles;
