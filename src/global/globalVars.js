@@ -30,7 +30,7 @@ const GlobalVars = {
 
 
 	/** API PATH **/
-	urlapi: 'https://tiendagalo.co/api',
+	urlapi: 'https://api.tiendagalo.co/api',
 
 
 	/** KEY REQUEST **/

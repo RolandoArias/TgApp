@@ -13,6 +13,7 @@ import TranslateText from "../../utils/useTranslations";
 import GlobalVars from "../../global/globalVars";
 
 /** Import Componentes Custom */
+import FABOff from "../../components/atoms/FABLogout";
 import FABCheckout from "../../components/atoms/FABCheckout";
 import StatusBarComponent from "../../components/atoms/StatusBar";
 import SwitchEntryLang from "../../components/molecules/SwitchLang";
@@ -194,6 +195,11 @@ const FirstScreen = ({ navigation }) => {
     }
   };
 
+  const handleOffApp = async () => {
+    await clearAll();
+    navigation.navigate("Initial");
+  };
+
   const redirectToProduct = (id) => {
     setearModalSearch();
     navigation.navigate("Product", { itemProduct: id });
@@ -201,9 +207,8 @@ const FirstScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
+      <StatusBarComponent />
       <View style={styles.viewHome}>
-        <StatusBarComponent />
-
         <ScrollView
           style={styles.scrollView}
           contentContainerStyle={styles.contentContainer}
@@ -276,6 +281,7 @@ const FirstScreen = ({ navigation }) => {
         </ScrollView>
 
         {/* <FABCheckout /> */}
+        {<FABOff onHandle={handleOffApp} />}
       </View>
     </SafeAreaView>
   );

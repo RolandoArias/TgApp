@@ -5,8 +5,6 @@ import LoadStack from './LoadStack';
 
 import AsyncStorage from '@react-native-community/async-storage';
 
-import GlobalStyles from '../../global/globalVars';
-
 const AppNavigator = ({TabBottom}) => {
 
     const [ redirect, setRedirect ]= useState('Initial');

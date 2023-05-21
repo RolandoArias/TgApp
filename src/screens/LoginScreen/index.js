@@ -169,7 +169,6 @@ const LoginScreen = ({ navigation }) => {
       })
         .then((response) => response.json())
         .then((responseJson) => {
-          //   console.log(responseJson);
 
           // console.log( responseJson );
           if (!responseJson.success) {
