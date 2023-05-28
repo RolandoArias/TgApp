@@ -4,11 +4,11 @@ import {
   View,
   Animated,
   SafeAreaView,
-  ScrollView,
   BackHandler,
+  ScrollView,
 } from "react-native";
 
-import AsyncStorage from "@react-native-community/async-storage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 /** Import Translations */
 import TranslateText from "../../utils/useTranslations";
@@ -97,7 +97,7 @@ const InitialScreen = ({ navigation }) => {
       <View style={styles.viewLogin}>
         <StatusBarComponent />
 
-        <AnimatedScrollView
+        <ScrollView
           style={styles.scrollView}
           contentContainerStyle={styles.contentContainer}
         >
@@ -115,7 +115,7 @@ const InitialScreen = ({ navigation }) => {
             iconName="arrowright"
             ToLogin={ToLogin}
           />
-        </AnimatedScrollView>
+        </ScrollView>
 
         {salirApp && <ModalsSignup CloseApp={CloseApp} isSalirApp />}
       </View>

@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 
 /** Expo Auth */
-//import firebase from 'firebase';
+// import firebase from 'firebase';
 import * as WebBrowser from "expo-web-browser";
 import { ResponseType } from "expo-auth-session";
 import * as Facebook from "expo-auth-session/providers/facebook";

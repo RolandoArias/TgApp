@@ -1,10 +1,16 @@
 import React, { useEffect, useState } from "react";
 
-import { View, BackHandler, SafeAreaView, Animated } from "react-native";
+import {
+  View,
+  BackHandler,
+  SafeAreaView,
+  Animated,
+  ScrollView,
+} from "react-native";
 
 import { useFocusEffect } from "@react-navigation/native";
-import { ScrollView } from "react-native-gesture-handler";
-import AsyncStorage from "@react-native-community/async-storage";
+
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 /** Import Translations */
 import TranslateText from "../../utils/useTranslations";
@@ -13,7 +19,6 @@ import TranslateText from "../../utils/useTranslations";
 import GlobalVars from "../../global/globalVars";
 
 /** Import Componentes Custom */
-import FABOff from "../../components/atoms/FABLogout";
 import FABCheckout from "../../components/atoms/FABCheckout";
 import StatusBarComponent from "../../components/atoms/StatusBar";
 import SwitchEntryLang from "../../components/molecules/SwitchLang";
@@ -68,6 +73,12 @@ const FirstScreen = ({ navigation }) => {
 
   useFocusEffect(
     React.useCallback(() => {
+      /** Recover Language */
+      getLang();
+
+      /** Recover user data */
+      recoveringDataUsaer();
+
       /** Android no return Login */
       const backAction = () => {
         setSalirapp(!salirApp);
@@ -195,11 +206,6 @@ const FirstScreen = ({ navigation }) => {
     }
   };
 
-  const handleOffApp = async () => {
-    await clearAll();
-    navigation.navigate("Initial");
-  };
-
   const redirectToProduct = (id) => {
     setearModalSearch();
     navigation.navigate("Product", { itemProduct: id });
@@ -207,8 +213,9 @@ const FirstScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBarComponent />
       <View style={styles.viewHome}>
+        <StatusBarComponent />
+
         <ScrollView
           style={styles.scrollView}
           contentContainerStyle={styles.contentContainer}
@@ -232,6 +239,7 @@ const FirstScreen = ({ navigation }) => {
               userToken={userToken}
             />
           )}
+
           {userToken && (
             <LatestBuyCarouselComponent
               navigation={navigation}
@@ -239,6 +247,7 @@ const FirstScreen = ({ navigation }) => {
               userToken={userToken}
             />
           )}
+
           {userToken && (
             <Top5Carousel
               navigation={navigation}
@@ -246,12 +255,14 @@ const FirstScreen = ({ navigation }) => {
               userToken={userToken}
             />
           )}
+
           {userToken && (
             <BannerPromotionalCard
               userToken={userToken}
               navigation={navigation}
             />
           )}
+
           {userToken && (
             <WeekOffCarousel
               navigation={navigation}
@@ -267,6 +278,7 @@ const FirstScreen = ({ navigation }) => {
               isSalirApp
             />
           )}
+
           {modalSearch && (
             <ModalSearch
               ctrlModal={setearModalSearch}
@@ -280,8 +292,7 @@ const FirstScreen = ({ navigation }) => {
           )}
         </ScrollView>
 
-        {/* <FABCheckout /> */}
-        {<FABOff onHandle={handleOffApp} />}
+        <FABCheckout navigation={navigation} />
       </View>
     </SafeAreaView>
   );

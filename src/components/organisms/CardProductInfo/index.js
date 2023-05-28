@@ -9,7 +9,7 @@ import {
 } from "react-native";
 
 import { AntDesign } from "@expo/vector-icons";
-import AsyncStorage from "@react-native-community/async-storage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const AnimatedScrollView = Animated.createAnimatedComponent(ScrollView);
 
@@ -18,6 +18,9 @@ import GlobalVars from "../../../global/globalVars";
 
 /** Import Translations */
 import TranslateText from "../../../utils/useTranslations";
+
+/** Import Hooks Wish */
+import WishMethods from "../../../utils/useWish";
 
 /** Imort components */
 import ButtonComponent from "../../../components/atoms/ButtonComponent";
@@ -34,6 +37,7 @@ const CardProductInfo = ({
   image,
   isFavorite = false,
   lang = "es",
+  userToken = null,
   ...props
 }) => {
   /** Quantity products add */
@@ -83,9 +87,11 @@ const CardProductInfo = ({
     switch (setting) {
       case 1:
         addToWishList(id);
+        WishMethods.setWishItem(id, userToken);
         break;
       case 2:
         quitToWishList(id);
+        WishMethods.dropWishItem(id, userToken);
         break;
       default:
         null;

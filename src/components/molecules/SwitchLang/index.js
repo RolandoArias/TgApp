@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 
 /** Import Styles for this Screen */
 import Styles from "./style";
@@ -17,10 +17,12 @@ const SwitchEntryLang = ({ lang = "es", ...props }) => {
   };
 
   return (
-    <TouchableOpacity style={styles.button} onPress={() => setValue()}>
-      {lang === "es" && <Text style={styles.texto}>EN</Text>}
-      {lang === "en" && <Text style={styles.texto}>ES</Text>}
-    </TouchableOpacity>
+    <View style={styles.rootView}>
+      <TouchableOpacity style={styles.button} onPress={() => setValue()}>
+        {lang === "es" && <Text style={styles.texto}>EN</Text>}
+        {lang === "en" && <Text style={styles.texto}>ES</Text>}
+      </TouchableOpacity>
+    </View>
   );
 };
 

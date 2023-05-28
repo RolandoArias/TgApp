@@ -1,4 +1,5 @@
-import { StyleSheet } from "react-native";
+import * as React from "react";
+import { Platform, StyleSheet } from "react-native";
 
 import Constants from "expo-constants";
 
@@ -14,7 +15,7 @@ const Styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    // paddingTop: Constants.statusBarHeight,
+    paddingTop: Constants.statusBarHeight,
     paddingBottom: 0,
     // paddingHorizontal: 20,
   },
@@ -30,7 +31,7 @@ const Styles = StyleSheet.create({
   },
 
   contentContainer: {
-    paddingTop: Constants.statusBarHeight,
+    paddingTop: Platform.OS === "ios" ? 0 : Constants.statusBarHeight,
     paddingBottom: 30, //TODO
     // paddingHorizontal: 20,
     justifyContent: "center",

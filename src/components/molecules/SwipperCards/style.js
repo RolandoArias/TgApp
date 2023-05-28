@@ -7,7 +7,8 @@ const Styles = StyleSheet.create({
 
   rootView: {
     width: "100%",
-    height: GlobalVars.windowHeight < 600 ? 600 : GlobalVars.windowHeight / 1.35,
+    height:
+      GlobalVars.windowHeight < 600 ? 600 : GlobalVars.windowHeight / 1.35,
     justifyContent: "center",
     alignItems: "center",
     alignContent: "center",

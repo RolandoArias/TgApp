@@ -1,96 +1,89 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from "react";
 
 /** Expo Auth */
-//import firebase from 'firebase';
+// import firebase from "firebase";
 import * as WebBrowser from "expo-web-browser";
 import { ResponseType } from "expo-auth-session";
-import * as Google from 'expo-auth-session/providers/google';
+import * as Google from "expo-auth-session/providers/google";
 
 /** Global Vars */
-import GlobalVars from '../../../global/globalVars';
+import GlobalVars from "../../../global/globalVars";
 
 /** Import FB Button Component */
-import ButtonGoogle from '../../../components/atoms/ButtonGoogle';
+import ButtonGoogle from "../../../components/atoms/ButtonGoogle";
 
 // Initialize Firebase
-if (!firebase.apps.length) {
-    firebase.initializeApp(
-        /** Config */
-        GlobalVars.firebaseConfig
-    );
-}
+// if (!firebase.apps.length) {
+//   firebase.initializeApp(
+//     /** Config */
+//     GlobalVars.firebaseConfig
+//   );
+// }
 
 /** WebBrowser Auth */
-WebBrowser.maybeCompleteAuthSession();
+// WebBrowser.maybeCompleteAuthSession();
 
-const GooSign = (props) => {
+// const GooSign = (props) => {
+//   const [name, setName] = useState("");
+//   const [email, setEmail] = useState("");
+//   const [uid, setUid] = useState("");
+//   const [token, setToken] = useState("");
+//   const [returning, setReturning] = useState("");
 
-    const [ name, setName ] = useState('');
-    const [ email, setEmail ] = useState('');
-    const [ uid, setUid ] = useState('');
-    const [ token, setToken ] = useState('');
-    const [ returning, setReturning ] = useState('');
+//   /** Enviroment To Google Auth */
+//   const [request, response = null, promptAsync] = Google.useIdTokenAuthRequest({
+//     // expoClientId: GlobalVars.expoClientIDGoogleSign,
+//     // iosClientId: GlobalVars.expoClientIDGoogleSign,
+//     // androidClientId: GlobalVars.expoClientIDGoogleSign,
+//     // webClientId: GlobalVars.expoClientIDGoogleSign,
+//     clientId: GlobalVars.expoClientIDGoogleSign,
+//   });
 
-    /** Enviroment To Google Auth */
-    const [request, response = null, promptAsync] = Google.useIdTokenAuthRequest({
-        // expoClientId: GlobalVars.expoClientIDGoogleSign,
-        // iosClientId: GlobalVars.expoClientIDGoogleSign,
-        // androidClientId: GlobalVars.expoClientIDGoogleSign,
-        // webClientId: GlobalVars.expoClientIDGoogleSign,
-        clientId: GlobalVars.expoClientIDGoogleSign,
-    });
-    
-    useEffect( () => {
-        if (response?.type === 'success') {
-            const { id_token } = response.params;
-            
-            const credential = firebase.auth.GoogleAuthProvider.credential(id_token);
-            firebase.auth().signInWithCredential(credential);
+//   useEffect(() => {
+//     if (response?.type === "success") {
+//       const { id_token } = response.params;
 
-            setToken( id_token );
+//       const credential = firebase.auth.GoogleAuthProvider.credential(id_token);
+//       firebase.auth().signInWithCredential(credential);
 
-            // console.log( id_token );
-            // console.log(response);
+//       setToken(id_token);
 
-            var user = firebase.auth().currentUser;
-            // console.log(user);
-            if (user) {
-                // User is signed in.
-                // setName( user.displayName );
-                // setEmail( user.email );
-                // setUid( user.uid );
-                // setToken( response.params.id_token );
+//       // console.log( id_token );
+//       // console.log(response);
 
-                // console.log({name}, {email}, {token});
-                console.log( response.params.id_token.length );
+//       var user = firebase.auth().currentUser;
+//       // console.log(user);
+//       if (user) {
+//         // User is signed in.
+//         // setName( user.displayName );
+//         // setEmail( user.email );
+//         // setUid( user.uid );
+//         // setToken( response.params.id_token );
 
-            } else {
-                // No user is signed in.
-            }
-        }
-    }, [response]);
+//         // console.log({name}, {email}, {token});
+//         console.log(response.params.id_token.length);
+//       } else {
+//         // No user is signed in.
+//       }
+//     }
+//   }, [response]);
 
-    // Hooke de returning To Screen
-    useEffect(() => {
+//   // Hooke de returning To Screen
+//   useEffect(() => {
+//     if (props.GoogleAction) {
+//       // console.log('---------------');
+//       props.GoogleAction("sucess");
+//     }
+//     // console.log(11111);
+//   }, [token]);
 
-        if(props.GoogleAction){
-            // console.log('---------------');
-            props.GoogleAction( 'sucess' );
-        }
-        // console.log(11111);
+//   const GoogleSign = () => {
+//     promptAsync();
+//   };
 
-    }, [token]);
+//   return <ButtonGoogle GoogleSign={GoogleSign} />;
+// };
 
-    const GoogleSign = () => {
-        
-        promptAsync();
-    
-    }
+// export default GooSign;
 
-    return(
-        <ButtonGoogle GoogleSign={GoogleSign} />
-    );
-
-}
-
-export default GooSign;
+export const T = 1;

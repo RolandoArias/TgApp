@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from "react";
 
-import { View, BackHandler, SafeAreaView, Animated } from "react-native";
+import {
+  View,
+  BackHandler,
+  SafeAreaView,
+  Animated,
+  ScrollView,
+} from "react-native";
 
 import { useFocusEffect } from "@react-navigation/native";
 
-import { ScrollView } from "react-native-gesture-handler";
-import AsyncStorage from "@react-native-community/async-storage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 /** Import Translations */
 import TranslateText from "../../utils/useTranslations";
@@ -323,7 +328,10 @@ const CheckoutScreen = ({ navigation }) => {
   };
 
   const ToPurchasing = () => {
-    navigation.navigate("Purchasing");
+    navigation.navigate("Purchasing", {
+      PrecioTotal: totalPrice,
+      Carrito: cart,
+    });
   };
 
   return (
@@ -367,6 +375,7 @@ const CheckoutScreen = ({ navigation }) => {
               <ModalsCheckout
                 navigation={navigation}
                 CloseModal={CloseModal}
+                lang={lang}
                 isUpdateCheckout
               />
             )}
@@ -374,6 +383,7 @@ const CheckoutScreen = ({ navigation }) => {
               <ModalsCheckout
                 navigation={navigation}
                 CloseModal={CloseModal}
+                lang={lang}
                 isDropCheckout
               />
             )}

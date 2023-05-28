@@ -1,25 +1,22 @@
 import * as React from "react";
-import {
-  View,
-  Text,
-  Animated,
-  Image,
-  ActivityIndicator,
-  ScrollView,
-  TouchableOpacity,
-} from "react-native";
+import { View, Text, Animated, Image, ActivityIndicator } from "react-native";
 
 import { AntDesign } from "@expo/vector-icons";
 
+import { useFocusEffect } from "@react-navigation/native";
+import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 /** Import Componentes Custom */
-import TitleComponent from "../../atoms/Titles";
-import CategoryCard from "../../molecules/CategoryCard";
 
 /** Import Translations */
 import TranslateText from "../../../utils/useTranslations";
 
 /** Import Global Variables */
 import GlobalVars from "../../../global/globalVars";
+
+/** Import Hooks Wish */
+import WishMethods from "../../../utils/useWish";
 
 /** Import Styles for this Screen */
 import Styles from "./style";
@@ -38,6 +35,19 @@ export default function ProductsWish({
   const [loading, setLoading] = React.useState(false);
 
   React.useEffect(() => {
+    /** Get product wishlist */
+    getProducts();
+  }, []);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      /** Get product wishlist */
+      getProducts();
+    }, [])
+  );
+
+  React.useEffect(() => {
+    /** Get product wishlist */
     getProducts();
   }, [userToken]);
 
@@ -68,7 +78,6 @@ export default function ProductsWish({
     fetch(GlobalVars.urlapi + "/products/my-favorite-products", requestOptions)
       .then((response) => response.json())
       .then((responseJson) => {
-        // console.log( responseJson );
         if (responseJson.success && responseJson.data)
           setResult(responseJson.data);
         // console.log( responseJson.data );
@@ -79,44 +88,99 @@ export default function ProductsWish({
       })
       .finally(() => setLoading(false));
   };
-  const handleDelete = () => {};
+  const handleDelete = async (id) => {
+    await WishMethods.dropWishItem(id, userToken);
+    quitToWishList(id);
+  };
+
+  const quitToWishList = async (id) => {
+    //  console.log(id);
+    try {
+      const wishlistcurrent = JSON.parse(
+        await AsyncStorage.getItem("currentWishList")
+      );
+      // console.log( {wishlistcurrent} );
+      if (wishlistcurrent && wishlistcurrent.wishlist) {
+        let exists = null;
+        let indextoslice = null;
+        // Verifico si existe el id en el wishlist
+        wishlistcurrent.wishlist.find(function (value, index) {
+          // console.log({index}, {value});
+          if (value === id) {
+            exists = true;
+            indextoslice = index;
+          }
+        });
+
+        // console.log( {exists} );
+        let newwish = wishlistcurrent.wishlist;
+        if (exists) {
+          newwish.splice(indextoslice, 1);
+          AsyncStorage.removeItem("currentWishList");
+          let objwish = {};
+          objwish.wishlist = newwish;
+          if (newwish.length > 0) {
+            AsyncStorage.setItem("currentWishList", JSON.stringify(objwish));
+          }
+          getProducts();
+        } else {
+          null;
+          getProducts();
+        }
+      } else {
+        getProducts();
+      }
+    } catch (e) {
+      // console.log(e);
+      null;
+    }
+  };
+
   const redirectPage = (id) => {
     navigation.navigate("Product", { itemProduct: id });
     // console.log( id );
   };
 
-  let Cardss = result.map((item, i) => {
-    // console.log("get Cards");
-    let uriimage = "";
-    if (item.images && item.images[0])
-      uriimage = item.images[0].url ? item.images[0].url : "";
-    else uriimage = null;
-    return (
-      <View style={styles.root} key={i}>
-        <TouchableOpacity
-          style={styles.touchable}
-          onPress={() => redirectPage(item.id)}
-        >
-          <View style={styles.imageWrapper}>
-            <Image style={styles.tinyImage} source={{ uri: uriimage }} />
-          </View>
-          <View style={styles.wrapperContent}>
-            <Text style={styles.titleCard}>{item.name} </Text>
-            <Text style={styles.priceCard}>${item.price} </Text>
-            <View style={styles.ctrlWrapper}></View>
-          </View>
-        </TouchableOpacity>
-        <View style={styles.iconWrapper}>
+  let Cardss =
+    result?.map((item, i) => {
+      // console.log("get Cards");
+
+      if (!item) return null;
+
+      let uriimage = "";
+      if (item.images && item.images[0])
+        uriimage = item.images[0].url ? item.images[0].url : "";
+      else uriimage = null;
+      return (
+        <View style={styles.root} key={i}>
           <TouchableOpacity
-            onPress={() => handleDelete()}
-            atyle={styles.wrapperDelete}
+            style={styles.touchable}
+            onPress={() => redirectPage(item.id)}
           >
-            <AntDesign name="delete" size={20} color={GlobalVars.bluePantone} />
+            <View style={styles.imageWrapper}>
+              <Image style={styles.tinyImage} source={{ uri: uriimage }} />
+            </View>
+            <View style={styles.wrapperContent}>
+              <Text style={styles.titleCard}>{item.name} </Text>
+              <Text style={styles.priceCard}>${item.price} </Text>
+              <View style={styles.ctrlWrapper}></View>
+            </View>
           </TouchableOpacity>
+          <View style={styles.iconWrapper}>
+            <TouchableOpacity
+              onPress={() => handleDelete(item.id)}
+              atyle={styles.wrapperDelete}
+            >
+              <AntDesign
+                name="delete"
+                size={20}
+                color={GlobalVars.bluePantone}
+              />
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
-    );
-  });
+      );
+    }) || null;
 
   return (
     <View style={styles.rootMain}>
@@ -136,6 +200,21 @@ export default function ProductsWish({
         </Text>
       )}
       {!empty && !loading && Cardss}
+      {!loading && !result.length && (
+        <View
+          style={{
+            width: "100%",
+            paddingHorizontal: 20,
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+          key={0}
+        >
+          <Text style={styles.titleCard}>
+            {TranslateText(lang, "Nada por mostrar")}
+          </Text>
+        </View>
+      )}
       {empty && !loading && (
         <Text style={styles.titleWishProduct}>
           {TranslateText(lang, "No tiene productos favoritos")}

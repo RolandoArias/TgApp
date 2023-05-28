@@ -1,7 +1,6 @@
 import * as React from "react";
 
 import { TouchableOpacity, Text } from "react-native";
-
 import { AntDesign } from "@expo/vector-icons";
 
 import GlobalVars from "../../../global/globalVars";
@@ -36,6 +35,15 @@ const ButtonComponent = ({ text, color = "blue", ...props }) => {
         style={[styles.icon, { position: "absolute", right: 20 }]}
       />
     ) : null;
+  const iconLeft =
+    props.iconLeft && props.iconLeft !== "" ? (
+      <AntDesign
+        name={props.iconLeft}
+        size={20}
+        color={color === "blue" ? GlobalVars.white : GlobalVars.bluePantone}
+        style={[styles.icon, { position: "absolute", left: 60 }]}
+      />
+    ) : null;
 
   let ButtonReturn = () => (
     <TouchableOpacity
@@ -46,7 +54,15 @@ const ButtonComponent = ({ text, color = "blue", ...props }) => {
       ]}
       onPress={() => clickThisButton()}
     >
-      <Text style={[styles.textbtn, { color: colorText }]}>{text}</Text>
+      {iconLeft}
+      <Text
+        style={[
+          styles.textbtn,
+          { color: colorText, marginLeft: props.iconLeft ? 30 : null },
+        ]}
+      >
+        {text}
+      </Text>
       {iconBtn}
     </TouchableOpacity>
   );

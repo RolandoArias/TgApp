@@ -11,7 +11,9 @@ import {
 
 import { useFocusEffect } from "@react-navigation/native";
 
-import AsyncStorage from "@react-native-community/async-storage";
+/** Firebase Library */
+// import firebase from 'firebase';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 /** Import Translations */
 import TranslateText from "../../utils/useTranslations";
@@ -24,7 +26,7 @@ import TitleComponent from "../../components/atoms/Titles";
 import StatusBarComponent from "../../components/atoms/StatusBar";
 import ButtonComponent from "../../components/atoms/ButtonComponent";
 import SwitchEntryLang from "../../components/molecules/SwitchLang";
-// import GooSign from '../../components/molecules/GoogleSign';
+// import GooSign from "../../components/molecules/GoogleSign";
 // import FBSign from "../../components/molecules/FBSign";
 import InputEntry from "../../components/molecules/InputEntry";
 // import CheckboxEntry from '../../components/molecules/EntryCheckbox';
@@ -59,17 +61,11 @@ const SignupScreen = ({ navigation }) => {
     useState(false);
 
   useFocusEffect(
-    React.useCallback(() => {
-      const backAction = () => {
-        navigation.goBack();
-        return true;
-      };
+    useCallback(() => {
+      /** Backhandler process Android -> back button */
+      BackHandlerProcess();
 
-      const backHandler = BackHandler.addEventListener(
-        "hardwareBackPress",
-        backAction
-      );
-      return () => backHandler.remove();
+      return () => {};
     }, [])
   );
 
@@ -82,6 +78,20 @@ const SignupScreen = ({ navigation }) => {
     if (respuestaAsynstorage === "complete") navigation.navigate("Home");
     else null;
   }, [respuestaAsynstorage]);
+
+  const BackHandlerProcess = () => {
+    /** Android return */
+    const backAction = () => {
+      navigation.goBack();
+      return true;
+    };
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      backAction
+    );
+
+    return () => backHandler.remove();
+  };
 
   const getLang = async () => {
     try {
@@ -231,28 +241,23 @@ const SignupScreen = ({ navigation }) => {
   };
 
   const GoogleAction = useCallback((result) => {
-    /*
-        // console.log('---------------');
-        // console.log({result}, {name}, {email}, {token});
-
-        let res = {};
-
-        var user = firebase.auth().currentUser;
-        if( user ){
-            // console.log(user.refreshToken);
-            res.name = user.displayName;
-            res.email = user.email;
-            res.token = user.refreshToken;
-
-            if( res.name !== '' && res.email !== '' ){
-                setearMailnumber( res.email );
-                setearName( res.name );
-                // console.log('---------------');
-                // console.log({res});
-                saveToken(res);
-            }
-        }
-        */
+    // // console.log('---------------');
+    // // console.log({result}, {name}, {email}, {token});
+    // let res = {};
+    // var user = firebase.auth().currentUser;
+    // if( user ){
+    //     // console.log(user.refreshToken);
+    //     res.name = user.displayName;
+    //     res.email = user.email;
+    //     res.token = user.refreshToken;
+    //     if( res.name !== '' && res.email !== '' ){
+    //         setearMailnumber( res.email );
+    //         setearName( res.name );
+    //         // console.log('---------------');
+    //         // console.log({res});
+    //         saveToken(res);
+    //     }
+    // }
   });
 
   const FacebookSign = () => {};
@@ -278,7 +283,7 @@ const SignupScreen = ({ navigation }) => {
       <View style={styles.viewSignup}>
         <StatusBarComponent />
 
-        <AnimatedScrollView
+        <ScrollView
           style={styles.scrollView}
           contentContainerStyle={styles.contentContainer}
         >
@@ -342,59 +347,33 @@ const SignupScreen = ({ navigation }) => {
             />
           )}
 
-          {/* {
-                        Platform.OS !== 'ios'
-                        ?
-                        (
-                            termscond
-                            ?
-                            <CheckboxEntry label="Aceptar terminos y condiciones. Lorem ipsum dolor sit amet, 
-                                                consectetur adipiscelit, sed do eiusmod tempor incididunt."
-                                        setValue={setearTermsCond} statuscheck={termscond} />
-                            :
-                            <CheckboxEntry label="Aceptar terminos y condiciones. Lorem ipsum dolor sit amet, 
-                                                consectetur adipiscelit, sed do eiusmod tempor incididunt."
-                                        setValue={setearTermsCond} />
-                        )
-                        :
-                        null
-                    }  */}
-
-          {
-            // Platform.OS === 'ios'
-            // ?
-            // (
-            termscond ? (
-              <CheckboxEntryIos
-                label={TranslateText(lang, "Aceptar terminos y condiciones")}
-                setValue={setearTermsCond}
-                statuscheck={termscond}
-              />
-            ) : (
-              <CheckboxEntryIos
-                label={TranslateText(lang, "Aceptar terminos y condiciones")}
-                setValue={setearTermsCond}
-              />
-            )
-            // )
-            // :
-            // null
-          }
+          {termscond ? (
+            <CheckboxEntryIos
+              label={TranslateText(lang, "Aceptar terminos y condiciones")}
+              setValue={setearTermsCond}
+              statuscheck={termscond}
+            />
+          ) : (
+            <CheckboxEntryIos
+              label={TranslateText(lang, "Aceptar terminos y condiciones")}
+              setValue={setearTermsCond}
+            />
+          )}
 
           <ButtonComponent
             text={TranslateText(lang, "Crear Cuenta")}
             iconName="arrowright"
             ToSignUp={ToSignUp}
           />
-          {/*<GooSign GoogleAction={GoogleAction} />*/}
-          {/* <FBSign FacebookSign={FacebookSign} /> */}
+          {/* <GooSign GoogleAction={GoogleAction} />
+          <FBSign FacebookSign={FacebookSign} /> */}
 
           <HasAccount hasaccount={hasaccount} lang={lang} />
 
           {respuestaAsynstorage === "error" && (
             <ModalsSignup Action={setearRespuesta} isSignFalse />
           )}
-        </AnimatedScrollView>
+        </ScrollView>
       </View>
     </SafeAreaView>
   );

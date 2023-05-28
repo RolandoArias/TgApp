@@ -8,10 +8,14 @@ import {
   Animated,
   ActivityIndicator,
   Image,
+  TouchableOpacity,
+  Platform,
+  ScrollView,
 } from "react-native";
 
-import { ScrollView } from "react-native-gesture-handler";
-import AsyncStorage from "@react-native-community/async-storage";
+import { MaterialIcons } from "@expo/vector-icons";
+
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 /** Import Translations */
 import TranslateText from "../../utils/useTranslations";
@@ -151,8 +155,28 @@ const ProductScreen = ({ route, navigation }) => {
     <SafeAreaView style={styles.container}>
       <View style={styles.viewProduct}>
         <StatusBarComponent />
-        {!loading && (
-          <View style={styles.positiontitle}>
+
+        {Platform.OS === "ios" && (
+          <TouchableOpacity
+            style={styles.buttonReturn}
+            onPress={() => navigation.goBack()}
+          >
+            <MaterialIcons
+              name="keyboard-arrow-left"
+              size={24}
+              color={GlobalVars.firstColor}
+            />
+          </TouchableOpacity>
+        )}
+
+        {!loading && Platform.OS !== "ios" && (
+          <View style={styles.positiontitleAndroid}>
+            <Text style={styles.title}>{data.name || ""}</Text>
+          </View>
+        )}
+
+        {!loading && Platform.OS === "ios" && (
+          <View style={styles.positiontitleiOS}>
             <Text style={styles.title}>{data.name || ""}</Text>
           </View>
         )}
@@ -168,11 +192,13 @@ const ProductScreen = ({ route, navigation }) => {
               color={GlobalVars.firstColor}
             />
           )}
+
           {loading && (
             <Text style={styles.loadingText}>
               {TranslateText(lang, "cargando...")}
             </Text>
           )}
+
           {!loading && (
             <Image
               style={styles.image}
@@ -191,11 +217,13 @@ const ProductScreen = ({ route, navigation }) => {
             image={data.images[0].url}
             updatingCheckout={updatingCheckout}
             lang={lang}
+            userToken={userToken}
             isFavorite
           />
         ) : (
           <></>
         )}
+
         {!loading && userToken && !data.is_favorite ? (
           <CardProductInfo
             idproduct={itemProduct}
@@ -204,6 +232,7 @@ const ProductScreen = ({ route, navigation }) => {
             image={data.images[0].url}
             updatingCheckout={updatingCheckout}
             lang={lang}
+            userToken={userToken}
           />
         ) : (
           <></>
@@ -213,6 +242,7 @@ const ProductScreen = ({ route, navigation }) => {
           <ModalsCheckout
             navigation={navigation}
             CloseModal={CloseModal}
+            lang={lang}
             isUpdateCheckout
           />
         )}

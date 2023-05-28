@@ -153,6 +153,13 @@ const Styles = StyleSheet.create({
         color: GlobalVars.grisIntermediate,
         fontSize: 14,
         fontFamily: GlobalVars.fontFamily,
+    },
+    
+    loadingText: {
+        color: GlobalVars.firstColor,
+        fontSize: 16,
+        fontFamily: GlobalVars.fontFamily,
+        alignSelf: "center"
     }
 
 });

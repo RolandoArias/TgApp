@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { View, Modal, Image, } from 'react-native';
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { NavigationContainer } from '@react-navigation/native';
 
 import GlobalVars from '../../../global/globalVars';

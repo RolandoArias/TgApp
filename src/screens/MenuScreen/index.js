@@ -15,7 +15,7 @@ import { useFocusEffect } from '@react-navigation/native';
 
 import { ScrollView } from 'react-native-gesture-handler';
 
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 /** Import Translations */
 import TranslateText from '../../utils/useTranslations';
@@ -85,8 +85,8 @@ const MenuScreen = ({navigation}) => {
         try{
             const usernametoapp = JSON.parse(await AsyncStorage.getItem("currentUserShowName"));
             const usertokentoapp = JSON.parse(await AsyncStorage.getItem("currentToken"));
-            setUserapp(usernametoapp);
-            setUserToken(usertokentoapp);
+            setUserapp( usernametoapp );
+            setUserToken( usertokentoapp );
         }catch(e){
             console.log('Error recovering');
             null;
@@ -126,9 +126,9 @@ const MenuScreen = ({navigation}) => {
                 <ScrollView 
                     style={styles.scrollView} 
                     contentContainerStyle={styles.contentContainer} >   
-                    
+                     <Text style={ styles.titleWishProduct } >{ TranslateText(lang, 'Menu') }</Text>
                     { loading && <ActivityIndicator style={{ alignSelf: 'center', marginVertical: 30 }} size="large" color={GlobalVars.firstColor} /> }                 
-                    { userToken && <HeaderMenuComponent  Component navigation={navigation} lang={lang}   name={userApp} /> }
+                    { userToken && <HeaderMenuComponent  Component navigation={navigation} lang={lang} userToken={userToken} /> }
                     
                 </ScrollView>
             </View>

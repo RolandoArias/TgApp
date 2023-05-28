@@ -7,6 +7,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import FirstScreen from "../../screens/FirstScreen";
 import CheckoutScreen from "../../screens/CheckoutScreen";
 import WishScreen from "../../screens/WishScreen";
+import UserScreen from "../../screens/UserScreen";
 import MenuScreen from "../../screens/MenuScreen";
 
 import GlobalStyles from "../../global/globalVars";
@@ -32,8 +33,8 @@ function TabBottom() {
       <Tab.Screen name="Inicio" component={FirstScreen} />
       <Tab.Screen name="Cart" component={CheckoutScreen} />
       <Tab.Screen name="Wish" component={WishScreen} />
-      <Tab.Screen name="User" component={FirstScreen} />
-      <Tab.Screen name="Menu" component={MenuScreen} />
+      <Tab.Screen name="User" component={UserScreen} />
+      {/* <Tab.Screen name="Menu" component={MenuScreen} /> */}
     </Tab.Navigator>
   );
 }

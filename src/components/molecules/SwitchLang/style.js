@@ -4,28 +4,39 @@ import Constants from "expo-constants";
 import GlobalVars from "../../../global/globalVars";
 
 const Styles = StyleSheet.create({
-  button: {
-    width: 50,
-    height: 50,
-    borderRadius: 10,
-    backgroundColor: "transparent",
-    position: "absolute",
-    top: Constants.statusBarHeight + 10,
-    left: GlobalVars.windowWidth - 75,
+  rootView: {
+    flex: 1,
     justifyContent: "center",
     alignItems: "center",
     alignContent: "center",
-    zIndex: 1,
+    width: 40,
+    height: 25,
+    position: "absolute",
+    top: Constants.statusBarHeight + 25,
+    right: 5,
+    borderRadius: 10,
+    backgroundColor: "transparent",
+    zIndex: 10,
+  },
+
+  button: {
+    width: "100%",
+    height: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+    alignContent: "center",
+    borderRadius: 10,
+    backgroundColor: "transparent",
   },
 
   texto: {
     fontSize: 13,
-    textAlign: "center",
-    textAlignVertical: "center",
-    alignSelf: "center",
+    textAlign: "justify",
     fontFamily: GlobalVars.fontFamily,
     width: "100%",
     height: "100%",
+    textAlign: "center",
+    textAlignVertical: "center",
     color: GlobalVars.bluePantone,
   },
 });

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { View, Platform } from "react-native";
 
 import Constants from "expo-constants";
-import AsyncStorage from "@react-native-community/async-storage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 /** Import Translations */
 import TranslateText from "../../../utils/useTranslations";
@@ -20,6 +20,9 @@ import Styles from "./style";
 const styles = Styles;
 
 const CustomHeaderStack = ({ scene, previous, navigation, ...props }) => {
+  if ((props.isProduct || props.isCategorie) && Platform.OS === "ios")
+    return null;
+
   // Language
   const [lang, setLang] = useState(GlobalVars.defaultLang);
 
@@ -65,6 +68,13 @@ const CustomHeaderStack = ({ scene, previous, navigation, ...props }) => {
             color={GlobalVars.azulOscuro}
             size={25}
             title={TranslateText(lang, "Categorias")}
+          />
+        )}
+        {props.isPurchasing && (
+          <TitleComponent
+            color={GlobalVars.azulOscuro}
+            size={25}
+            title={TranslateText(lang, "Purchasing")}
           />
         )}
       </View>

@@ -12,7 +12,9 @@ import {
 
 import { useFocusEffect } from "@react-navigation/native";
 
-import AsyncStorage from "@react-native-community/async-storage";
+/** Firebase Import */
+// import firebase from "firebase";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 /** Import Translations */
 import TranslateText from "../../utils/useTranslations";
@@ -25,7 +27,7 @@ import TitleComponent from "../../components/atoms/Titles";
 import StatusBarComponent from "../../components/atoms/StatusBar";
 import ButtonComponent from "../../components/atoms/ButtonComponent";
 import SwitchEntryLang from "../../components/molecules/SwitchLang";
-//import GooSign from '../../components/molecules/GoogleSign';
+// import GooSign from "../../components/molecules/GoogleSign";
 // import FBSign from "../../components/molecules/FBSign";
 import InputEntry from "../../components/molecules/InputEntry";
 import HasAccount from "../../components/molecules/hasAccount";
@@ -52,18 +54,11 @@ const LoginScreen = ({ navigation }) => {
   const [lang, setLang] = React.useState(GlobalVars.defaultLang);
 
   useFocusEffect(
-    React.useCallback(() => {
-      /** Android no return Login */
-      const backAction = () => {
-        navigation.goBack();
-        return true;
-      };
+    useCallback(() => {
+      /** Backhandler process Android -> back button */
+      BackHandlerProcess();
 
-      const backHandler = BackHandler.addEventListener(
-        "hardwareBackPress",
-        backAction
-      );
-      return () => backHandler.remove();
+      return () => {};
     }, [])
   );
 
@@ -79,15 +74,27 @@ const LoginScreen = ({ navigation }) => {
     else null;
   }, [respuestaAsynstorage]);
 
+  const BackHandlerProcess = () => {
+    /** Android return */
+    const backAction = () => {
+      navigation.goBack();
+      return true;
+    };
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      backAction
+    );
+
+    return () => backHandler.remove();
+  };
+
   const getDataUser = async () => {
     try {
       const usernametologg = JSON.parse(
         await AsyncStorage.getItem("LoginUser")
       );
       const userpasstologg = JSON.parse(await AsyncStorage.getItem("PassUser"));
-
-      //   console.log({ usernametologg }, { userpasstologg });
-
+      // console.log( {usernametologg}, {userpasstologg} );
       setMailnumber(usernametologg);
       setPass(userpasstologg);
     } catch (e) {
@@ -124,6 +131,7 @@ const LoginScreen = ({ navigation }) => {
   };
 
   const saveToken = (res) => {
+    // console.log( {res} );
     try {
       AsyncStorage.removeItem("currentUserAcces");
       AsyncStorage.removeItem("currentUserShowName");
@@ -139,7 +147,7 @@ const LoginScreen = ({ navigation }) => {
       setFinished(true);
     } catch (error) {
       // Error saving data
-    //   console.error();
+      // console.error();
       setRespuesta("error");
       setFinished(true);
     }
@@ -152,8 +160,6 @@ const LoginScreen = ({ navigation }) => {
 
     obj.username = mailnumber;
     obj.password = password;
-
-    // console.log(url);
 
     if (obj.username !== "" && obj.password !== "") {
       fetch(url + "/login", {
@@ -169,14 +175,13 @@ const LoginScreen = ({ navigation }) => {
       })
         .then((response) => response.json())
         .then((responseJson) => {
-
-          // console.log( responseJson );
+          // console.log(responseJson);
           if (!responseJson.success) {
-            // console.log(responseJson.message);
+            // console.log( responseJson.message );
             setRespuesta("error");
             setFinished(true);
           } else {
-            // console.log(responseJson.data);
+            // console.log( responseJson.data );
             var objres = {};
             objres.email = responseJson.data.email;
             objres.name = responseJson.data.name;
@@ -188,13 +193,13 @@ const LoginScreen = ({ navigation }) => {
               objres.token !== ""
             ) {
               saveToken(objres);
-              //   console.log("------------------");
-              //   console.log(objres);
+              // console.log( '------------------' );
+              // console.log( objres );
             }
           }
         })
         .catch((error) => {
-          console.log(error);
+          // console.log(error);
           setRespuesta("error");
           setFinished(true);
         });
@@ -217,28 +222,23 @@ const LoginScreen = ({ navigation }) => {
   };
 
   const GoogleAction = useCallback((result) => {
-    /*
-        // console.log('---------------');
-        // console.log({result}, {name}, {email}, {token});
-
-        let res = {};
-
-        var user = firebase.auth().currentUser;
-        if( user ){
-            // console.log(user.refreshToken);
-            res.name = user.displayName;
-            res.email = user.email;
-            res.token = user.refreshToken;
-
-            if( res.name !== '' && res.email !== '' ){
-                setearMailnumber( res.name );
-                setearPass( res.email );
-                // console.log('---------------');
-                // console.log({res});
-                saveToken(res);
-            }
-        }
-        */
+    // // console.log('---------------');
+    // // console.log({result}, {name}, {email}, {token});
+    // let res = {};
+    // // var user = firebase.auth().currentUser;
+    // if (user) {
+    //   // console.log(user.refreshToken);
+    //   res.name = user.displayName;
+    //   res.email = user.email;
+    //   res.token = user.refreshToken;
+    //   if (res.name !== "" && res.email !== "") {
+    //     setearMailnumber(res.name);
+    //     setearPass(res.email);
+    //     // console.log('---------------');
+    //     // console.log({res});
+    //     saveToken(res);
+    //   }
+    // }
   });
 
   const FacebookSign = () => {};
@@ -260,7 +260,7 @@ const LoginScreen = ({ navigation }) => {
       <View style={styles.viewLogin}>
         <StatusBarComponent />
 
-        <AnimatedScrollView
+        <ScrollView
           style={styles.scrollView}
           contentContainerStyle={styles.contentContainer}
         >
@@ -313,15 +313,15 @@ const LoginScreen = ({ navigation }) => {
             iconName="arrowright"
             ToLogin={ToLogin}
           />
-          {/* <GooSign GoogleAction={GoogleAction} /> */}
-          {/* <FBSign FacebookSign={FacebookSign} /> */}
+          {/* <GooSign GoogleAction={GoogleAction} />
+          <FBSign FacebookSign={FacebookSign} /> */}
 
           <HasAccount hasaccount={hasaccount} lang={lang} nothasaccount />
 
           {respuestaAsynstorage === "error" && (
             <ModalsSignup Action={setearRespuesta} isLogin />
           )}
-        </AnimatedScrollView>
+        </ScrollView>
       </View>
     </SafeAreaView>
   );

@@ -1,11 +1,20 @@
 import React, { useEffect, useState } from "react";
 
-import { View, BackHandler, SafeAreaView, Animated } from "react-native";
+import {
+  View,
+  Text,
+  BackHandler,
+  SafeAreaView,
+  Animated,
+  TouchableOpacity,
+  Platform,
+  ScrollView,
+} from "react-native";
 
+import { MaterialIcons } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
 
-import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
-import AsyncStorage from "@react-native-community/async-storage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 /** Import Translations */
 import TranslateText from "../../utils/useTranslations";
@@ -121,6 +130,26 @@ const CategoriesScreen = ({ route, navigation }) => {
     <SafeAreaView style={styles.container}>
       <View style={styles.viewCategories}>
         <StatusBarComponent />
+        {Platform.OS === "ios" && (
+          <TouchableOpacity
+            style={styles.buttonReturn}
+            onPress={() => navigation.goBack()}
+          >
+            <MaterialIcons
+              name="keyboard-arrow-left"
+              size={24}
+              color={GlobalVars.firstColor}
+            />
+          </TouchableOpacity>
+        )}
+
+        {Platform.OS === "ios" && (
+          <View style={styles.positiontitleiOS}>
+            <Text style={styles.title}>
+              {TranslateText(lang, "Categorías")}
+            </Text>
+          </View>
+        )}
         {searchmodal ? (
           <SearchButtonIconComponent
             searchmodal
@@ -176,7 +205,6 @@ const CategoriesScreen = ({ route, navigation }) => {
           {searchmodal && (
             <ModalSearchBar
               visible
-              lang={lang}
               changeTextSearch={changeTextSearch}
               searchText={searchText}
               ctrlModal={changeModalSearch}

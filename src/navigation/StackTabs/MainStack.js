@@ -5,6 +5,8 @@ import { Platform } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
+import { AntDesign } from "@expo/vector-icons";
+
 /** Import Main Stack Screens */
 import InitialScreen from "../../screens/InitialScreen";
 import LoginScreen from "../../screens/LoginScreen";
@@ -12,6 +14,7 @@ import SignupScreen from "../../screens/SignupScreen";
 import CategoriesScreen from "../../screens/CategoriesScreen";
 import ProductScreen from "../../screens/ProductScreen";
 import PurchasingScreen from "../../screens/PurchasingScreen";
+import BannerScreen from "../../screens/BannerScreen";
 
 /** Import Header Stack Component */
 import CustomHeaderStack from "../../components/organisms/CustomHeaderStack";
@@ -25,10 +28,7 @@ const styles = Styles;
 const MainStack = ({ TabBottom, redirect }) => {
   return (
     <NavigationContainer theme={MyTheme}>
-      <Stack.Navigator
-        initialRouteName={redirect}
-        screenOptions={{ headerShown: false }}
-      >
+      <Stack.Navigator initialRouteName={redirect}>
         <Stack.Screen
           name="Initial"
           component={InitialScreen}
@@ -112,7 +112,7 @@ const MainStack = ({ TabBottom, redirect }) => {
           name="Product"
           component={ProductScreen}
           options={{
-            headerShown: true,
+            headerShown: Platform.OS === "ios" ? false : true,
             headerStyle: {
               backgroundColor: "transparent",
             },
@@ -123,6 +123,7 @@ const MainStack = ({ TabBottom, redirect }) => {
                 previous={previous}
                 navigation={navigation}
                 isCustomTop
+                isProduct
               />
             ),
           }}
@@ -142,8 +143,16 @@ const MainStack = ({ TabBottom, redirect }) => {
                 previous={previous}
                 navigation={navigation}
                 isCustomTop
+                isPurchasing
               />
             ),
+          }}
+        />
+        <Stack.Screen
+          name="Banner"
+          component={BannerScreen}
+          options={{
+            headerShown: false,
           }}
         />
       </Stack.Navigator>

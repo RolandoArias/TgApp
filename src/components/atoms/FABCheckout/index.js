@@ -1,23 +1,29 @@
-import * as React from 'react';
+import * as React from "react";
 
-import { Icon, Fab } from 'native-base';
+import { Fab, Icon } from "native-base";
+
+import { Feather } from "@expo/vector-icons";
 
 /** Import Global Variables */
-import GlobalVars from '../../../global/globalVars';
+import GlobalVars from "../../../global/globalVars";
 
-const FABCheckout = () => {
-
-    return(
-        <Fab
-            active={true}
-            direction="up"
-            position="absolute"
-            containerStyle={{ }}
-            style={{ backgroundColor: GlobalVars.firstColor }}
-            onPress={ () => navigation.navigate('Cart') } >
-                <Icon name="cart" />
-        </Fab>
-    );
-}
+const FABCheckout = ({ navigation }) => {
+  return (
+    <Fab
+      position="absolute"
+      size="sm"
+      style={{ backgroundColor: GlobalVars.firstColor }}
+      onPress={() => navigation.navigate("Cart")}
+      icon={
+        <Icon
+          size={5}
+          color={GlobalVars.white}
+          as={<Feather name="shopping-cart" />}
+        />
+      }
+      bottom={GlobalVars.windowHeight / 12}
+    />
+  );
+};
 
 export default FABCheckout;

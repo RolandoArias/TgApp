@@ -5,7 +5,7 @@ import {
 } from 'react-native';
 import { SearchBar } from 'react-native-elements';
 
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 /** Import Translations */
 import TranslateText from '../../../utils/useTranslations';
