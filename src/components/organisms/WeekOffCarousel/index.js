@@ -23,6 +23,7 @@ export default function WeekOffCarousel({
   navigation,
   lang = "es",
   userToken = null,
+  ToRandomWishNumber = null,
 }) {
   const [result, setResult] = React.useState([]);
 
@@ -31,14 +32,10 @@ export default function WeekOffCarousel({
     getProducts();
   }, []);
 
-  useFocusEffect(
-    React.useCallback(() => {
-      /** Refresh result components */
-      /** Get products */
-      getProducts();
-      return () => 1;
-    }, [])
-  );
+  React.useEffect(() => {
+    /** Get products */
+    getProducts();
+  }, [ToRandomWishNumber]);
 
   const redirectPage = (id) => {
     navigation.navigate("Product", { itemProduct: id });

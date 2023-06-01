@@ -23,14 +23,10 @@ export default function BannerPromotionalCard({
     getPromotional();
   }, []);
 
-  useFocusEffect(
-    React.useCallback(() => {
-      /** Refresh result components */
-      /** Get promotional data */
-      getPromotional();
-      return () => 1;
-    }, [])
-  );
+  React.useEffect(() => {
+    /** Get promotional data */
+    getPromotional();
+  }, [props?.ToRandomWishNumber]);
 
   const getPromotional = () => {
     // console.log('------------');

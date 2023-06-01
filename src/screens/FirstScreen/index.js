@@ -49,27 +49,8 @@ const FirstScreen = ({ navigation }) => {
   // Language
   const [lang, setLang] = useState(GlobalVars.defaultLang);
 
-  useEffect(() => {
-    /** Recover Language */
-    getLang();
-
-    /** Recover user data */
-    recoveringDataUsaer();
-
-    // clearAll();
-
-    /** Android no return Login */
-    const backAction = () => {
-      setSalirapp(!salirApp);
-      return true;
-    };
-
-    const backHandler = BackHandler.addEventListener(
-      "hardwareBackPress",
-      backAction
-    );
-    return () => backHandler.remove();
-  }, []);
+  const [ToRandomWishNumber, setToRandomWishNumber] = useState(null);
+  const [downComponents, setDownComponents] = useState(false);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -78,6 +59,11 @@ const FirstScreen = ({ navigation }) => {
 
       /** Recover user data */
       recoveringDataUsaer();
+
+      /** Get Random vals */
+      getRandomNumberValidateToWish();
+
+      // clearAll();
 
       /** Android no return Login */
       const backAction = () => {
@@ -89,6 +75,7 @@ const FirstScreen = ({ navigation }) => {
         "hardwareBackPress",
         backAction
       );
+
       return () => backHandler.remove();
     }, [])
   );
@@ -98,6 +85,14 @@ const FirstScreen = ({ navigation }) => {
     searchingProducts(searchText);
     // console.log( {searchText} );
   }, [searchText]);
+
+  useEffect(() => {
+    setDownComponents(true);
+
+    setTimeout(() => {
+      setDownComponents(false);
+    }, 100);
+  }, [ToRandomWishNumber]);
 
   const CloseApp = (response = false) => {
     if (response) BackHandler.exitApp();
@@ -197,6 +192,12 @@ const FirstScreen = ({ navigation }) => {
     }
   };
 
+  const getRandomNumberValidateToWish = () => {
+    // random vals process for generate token for wish
+    let attrTemp = Math.random();
+    setToRandomWishNumber(attrTemp);
+  };
+
   const clearAll = async () => {
     try {
       await AsyncStorage.clear();
@@ -216,81 +217,86 @@ const FirstScreen = ({ navigation }) => {
       <View style={styles.viewHome}>
         <StatusBarComponent />
 
-        <ScrollView
-          style={styles.scrollView}
-          contentContainerStyle={styles.contentContainer}
-        >
-          <SwitchEntryLang lang={lang} setLanguage={setLanguage} />
+        {!downComponents && (
+          <ScrollView
+            style={styles.scrollView}
+            contentContainerStyle={styles.contentContainer}
+          >
+            <SwitchEntryLang lang={lang} setLanguage={setLanguage} />
 
-          {userApp !== "" && (
-            <HeaderHomeComponent
-              name={userApp}
-              question={TranslateText(lang, "¿Necesitas algo?")}
-              lang={lang}
-              searchlabel={TranslateText(lang, "Buscar")}
-              Action={setearModalSearch}
-            />
-          )}
+            {userApp !== "" && (
+              <HeaderHomeComponent
+                name={userApp}
+                question={TranslateText(lang, "¿Necesitas algo?")}
+                lang={lang}
+                searchlabel={TranslateText(lang, "Buscar")}
+                Action={setearModalSearch}
+              />
+            )}
 
-          {userToken && (
-            <CategoriesCarouselComponent
-              navigation={navigation}
-              lang={lang}
-              userToken={userToken}
-            />
-          )}
+            {userToken && (
+              <CategoriesCarouselComponent
+                navigation={navigation}
+                lang={lang}
+                userToken={userToken}
+              />
+            )}
 
-          {userToken && (
-            <LatestBuyCarouselComponent
-              navigation={navigation}
-              lang={lang}
-              userToken={userToken}
-            />
-          )}
+            {userToken && (
+              <LatestBuyCarouselComponent
+                navigation={navigation}
+                lang={lang}
+                userToken={userToken}
+              />
+            )}
 
-          {userToken && (
-            <Top5Carousel
-              navigation={navigation}
-              lang={lang}
-              userToken={userToken}
-            />
-          )}
+            {userToken && (
+              <Top5Carousel
+                navigation={navigation}
+                lang={lang}
+                userToken={userToken}
+                ToRandomWishNumber={ToRandomWishNumber}
+              />
+            )}
 
-          {userToken && (
-            <BannerPromotionalCard
-              userToken={userToken}
-              navigation={navigation}
-            />
-          )}
+            {userToken && (
+              <BannerPromotionalCard
+                userToken={userToken}
+                navigation={navigation}
+                ToRandomWishNumber={ToRandomWishNumber}
+              />
+            )}
 
-          {userToken && (
-            <WeekOffCarousel
-              navigation={navigation}
-              lang={lang}
-              userToken={userToken}
-            />
-          )}
+            {userToken && (
+              <WeekOffCarousel
+                navigation={navigation}
+                lang={lang}
+                userToken={userToken}
+                ToRandomWishNumber={ToRandomWishNumber}
+              />
+            )}
 
-          {salirApp && (
-            <ModalsSignup
-              navigation={navigation}
-              CloseApp={CloseApp}
-              isSalirApp
-            />
-          )}
+            {salirApp && (
+              <ModalsSignup
+                navigation={navigation}
+                CloseApp={CloseApp}
+                isSalirApp
+              />
+            )}
 
-          {modalSearch && (
-            <ModalSearch
-              ctrlModal={setearModalSearch}
-              searchlabel={TranslateText(lang, "Buscar")}
-              redirectToProduct={redirectToProduct}
-              searchText={searchText}
-              changeText={setearSearchText}
-              lang={lang}
-              searchProducts={searchProducts}
-            />
-          )}
-        </ScrollView>
+            {modalSearch && (
+              <ModalSearch
+                ctrlModal={setearModalSearch}
+                searchlabel={TranslateText(lang, "Buscar")}
+                redirectToProduct={redirectToProduct}
+                searchText={searchText}
+                changeText={setearSearchText}
+                lang={lang}
+                searchProducts={searchProducts}
+              />
+            )}
+          </ScrollView>
+        )}
 
         <FABCheckout navigation={navigation} />
       </View>

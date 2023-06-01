@@ -3,7 +3,6 @@ import { View, Text, Animated, Image, ActivityIndicator } from "react-native";
 
 import { AntDesign } from "@expo/vector-icons";
 
-import { useFocusEffect } from "@react-navigation/native";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -28,6 +27,7 @@ export default function ProductsWish({
   navigation,
   lang = "es",
   userToken = null,
+  ToRandomWishNumber = null,
   ...props
 }) {
   const [result, setResult] = React.useState([]);
@@ -39,12 +39,10 @@ export default function ProductsWish({
     getProducts();
   }, []);
 
-  useFocusEffect(
-    React.useCallback(() => {
-      /** Get product wishlist */
-      getProducts();
-    }, [])
-  );
+  React.useEffect(() => {
+    /** Get product wishlist */
+    getProducts();
+  }, [ToRandomWishNumber]);
 
   React.useEffect(() => {
     /** Get product wishlist */
@@ -56,9 +54,9 @@ export default function ProductsWish({
     navigation.navigate("Categories");
   };
 
-  const getProducts = () => {
+  const getProducts = async () => {
     // console.log('------------');
-    //   console.log(userToken);
+    // console.log(userToken);
 
     setLoading(true);
 
@@ -75,12 +73,15 @@ export default function ProductsWish({
       redirect: "follow",
     };
 
-    fetch(GlobalVars.urlapi + "/products/my-favorite-products", requestOptions)
+    await fetch(
+      GlobalVars.urlapi + "/products/my-favorite-products",
+      requestOptions
+    )
       .then((response) => response.json())
       .then((responseJson) => {
+        // console.log(responseJson);
         if (responseJson.success && responseJson.data)
           setResult(responseJson.data);
-        // console.log( responseJson.data );
       })
       .catch((error) => {
         // console.log('error', error);

@@ -1,8 +1,6 @@
 import * as React from "react";
 import { View, Animated, ScrollView } from "react-native";
 
-import { useFocusEffect } from "@react-navigation/native";
-
 /** Import Translations */
 import TranslateText from "../../../utils/useTranslations";
 
@@ -23,26 +21,14 @@ export default function Top5Carousel({
   navigation,
   lang = "es",
   userToken = null,
+  ToRandomWishNumber = null,
 }) {
   const [result, setResult] = React.useState([]);
 
   React.useEffect(() => {
     /** Get products */
     getProducts();
-  }, []);
-
-  useFocusEffect(
-    React.useCallback(() => {
-      /** Refresh result components */
-      /** Get products */
-      getProducts();
-    }, [])
-  );
-
-  React.useEffect(() => {
-    /** Get products */
-    getProducts();
-  }, [userToken]);
+  }, [ToRandomWishNumber]);
 
   const redirectPage = (id) => {
     navigation.navigate("Product", { itemProduct: id });

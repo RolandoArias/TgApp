@@ -12,9 +12,6 @@ import { useFocusEffect } from "@react-navigation/native";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-/** Import Translations */
-import TranslateText from "../../utils/useTranslations";
-
 /** Import Global Variables */
 import GlobalVars from "../../global/globalVars";
 
@@ -35,27 +32,7 @@ const WishScreen = ({ navigation }) => {
   // Language
   const [lang, setLang] = useState(GlobalVars.defaultLang);
 
-  useEffect(() => {
-    /** Recover Language */
-    getLang();
-
-    /** Recover user data */
-    recoveringDataUsaer();
-
-    // clearAll();
-
-    /** Android return back */
-    const backAction = () => {
-      CloseScreen();
-      return true;
-    };
-
-    const backHandler = BackHandler.addEventListener(
-      "hardwareBackPress",
-      backAction
-    );
-    return () => backHandler.remove();
-  }, []);
+  const [ToRandomWishNumber, setToRandomWishNumber] = useState(null);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -69,7 +46,19 @@ const WishScreen = ({ navigation }) => {
         "hardwareBackPress",
         backAction
       );
-      return () => backHandler.remove();
+
+      // data
+      recoveringDataUsaer();
+      getLang();
+
+      /** Get Random vals */
+      getRandomNumberValidateToWish();
+
+      // clearAll();
+
+      return () => {
+        backHandler.remove();
+      };
     }, [])
   );
 
@@ -107,6 +96,12 @@ const WishScreen = ({ navigation }) => {
     }
   };
 
+  const getRandomNumberValidateToWish = () => {
+    // random vals process for generate token for wish
+    let attrTemp = Math.random();
+    setToRandomWishNumber(attrTemp);
+  };
+
   const clearAll = async () => {
     try {
       await AsyncStorage.clear();
@@ -114,11 +109,6 @@ const WishScreen = ({ navigation }) => {
       // clear error
       // console.error();
     }
-  };
-
-  const redirectToProduct = (id) => {
-    setearModalSearch();
-    navigation.navigate("Product", { itemProduct: id });
   };
 
   return (
@@ -141,6 +131,7 @@ const WishScreen = ({ navigation }) => {
             <ProductsWish
               lang={lang}
               userToken={userToken}
+              ToRandomWishNumber={ToRandomWishNumber}
               navigation={navigation}
             />
           </AnimatedScrollView>

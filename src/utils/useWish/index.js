@@ -1,4 +1,5 @@
 import GlobalVars from "../../global/globalVars";
+
 const setWishItem = async (id, userToken) => {
   try {
     var myHeaders = new Headers();
@@ -17,21 +18,23 @@ const setWishItem = async (id, userToken) => {
       redirect: "follow",
     };
 
-    fetch(
+    await fetch(
       GlobalVars.urlapi + "/products/my-favorite-product/add",
       requestOptions
     )
       .then((response) => response.json())
       .then((responseJson) => {
+        // console.log(responseJson);
         if (responseJson.success === 200) {
           return "ok";
         }
       })
       .catch((error) => {
-        /* console.log('error', error) */
+        // console.log("error", error);
         return "error";
       });
   } catch (e) {
+    // console.log("error", e);
     return "error";
   }
 };
@@ -44,7 +47,6 @@ const dropWishItem = async (id, userToken) => {
     myHeaders.append("Content-Type", "application/json");
     myHeaders.append("Authorization", "Bearer " + userToken);
 
-
     var raw = JSON.stringify({
       product_id: id,
     });
@@ -55,21 +57,23 @@ const dropWishItem = async (id, userToken) => {
       redirect: "follow",
     };
 
-    fetch(
+    await fetch(
       GlobalVars.urlapi + "/products/my-favorite-product/add",
       requestOptions
     )
       .then((response) => response.json())
       .then((responseJson) => {
+        // console.log(responseJson);
         if (responseJson.success === 200) {
           return "ok";
         }
       })
       .catch((error) => {
-        /* console.log('error', error) */
+        // console.log("error", error);
         return "error";
       });
   } catch (e) {
+    // console.log("error", e);
     return "error";
   }
 };
