@@ -5,13 +5,14 @@ const GlobalVars = {
 
 	/** Tracking & Register Config */
     firebaseConfig: {
-		apiKey: "AIzaSyC1ISCOYOBk3nYjtWKXUgsAx4m1ONNra1Q",
-		authDomain: "tgapp-7efa3.firebaseapp.com",
-		projectId: "tgapp-7efa3",
-		storageBucket: "tgapp-7efa3.appspot.com",
-		messagingSenderId: "361900939499",
-		appId: "1:361900939499:web:cf384ac0cec1098e3946ae",
-		measurementId: "G-SCJJWXP4L2"
+
+		apiKey: "AIzaSyAZJWe97vZqOZOipGdjnoMieo45mmAEjBE",
+		authDomain: "tgapp-8099d.firebaseapp.com",
+		projectId: "tgapp-8099d",
+		storageBucket: "tgapp-8099d.appspot.com",
+		messagingSenderId: "879554585787",
+		appId: "1:879554585787:web:8925072ac9a5aee318759e",
+		measurementId: "G-0EXE1TGR0S"
 	    
 	},
 
@@ -30,7 +31,7 @@ const GlobalVars = {
 
 
 	/** API PATH **/
-	urlapi: 'http://137.184.17.33/api',
+	urlapi: 'https://api.tiendagalo.co/api',
 
 
 	/** KEY REQUEST **/

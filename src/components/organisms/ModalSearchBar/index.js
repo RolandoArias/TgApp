@@ -7,7 +7,7 @@ import { SearchBar } from 'react-native-elements';
 
 import { AntDesign } from '@expo/vector-icons'; 
 
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 /** Import Global vars */
 import GlobalVars from '../../../global/globalVars';

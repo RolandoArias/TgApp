@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { 
-    StyleSheet,
+    StyleSheet, Platform,
 } from 'react-native';
 import Constants from 'expo-constants';
 
@@ -12,8 +12,8 @@ const Styles = StyleSheet.create({
     root:{
         flexDirection: 'row',
         width: '100%',
-        paddingTop: Constants.statusBarHeight + 10 ,
         backgroundColor: 'transparent',
+        zIndex: 1
     },
 
     viewItem: {
@@ -21,8 +21,9 @@ const Styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         alignContent: 'center',
-        height: '100%',
+        height: Platform.OS === "ios" ? 35 : '100%',
         backgroundColor: 'transparent',
+        zIndex: 2
         // borderColor: GlobalVars.black,
         // borderWidth: 1
     },
@@ -35,6 +36,7 @@ const Styles = StyleSheet.create({
     viewExtreme: {
         width: '15%',
         backgroundColor: 'transparent',
+        zIndex: 3
     },
 
 });

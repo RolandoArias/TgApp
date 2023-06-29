@@ -5,7 +5,6 @@ import {
 } from 'react-native';
 
 import { useFocusEffect } from '@react-navigation/native';
-
 import { ScrollView } from 'react-native-gesture-handler';
 
 /** Import Componentes Custom */

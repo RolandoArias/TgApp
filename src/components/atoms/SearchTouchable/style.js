@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { 
+    Platform,
     StyleSheet
 } from 'react-native';
 
@@ -10,7 +11,7 @@ import GlobalVars from '../../../global/globalVars';
 const Styles = StyleSheet.create({
 
     rootview: {
-        zIndex: 1,
+        zIndex: 98,
         flex: 1,
         width: 30,
         height: 30,
@@ -19,11 +20,11 @@ const Styles = StyleSheet.create({
         alignContent: 'center',
         position: 'absolute',
         right: 30,
-        top: -(GlobalVars.windowHeight*0.038),
+        top: Platform.OS === "ios" ? (GlobalVars.windowHeight*0.182) : -(GlobalVars.windowHeight*0.038),
     },
 
     container: {
-        zIndex: 3,
+        zIndex: 99,
         width: 30,
         height: 30,
         justifyContent: 'center',

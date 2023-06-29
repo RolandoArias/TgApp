@@ -4,8 +4,6 @@ import {
     Text,
 } from 'react-native';
 
-import GlobalVars from '../../../global/globalVars';
-
 import Styles from './style';
 
 const styles = Styles;

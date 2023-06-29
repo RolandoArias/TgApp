@@ -9,7 +9,6 @@ import { SearchBar } from 'react-native-elements';
 import { AntDesign } from '@expo/vector-icons'; 
 
 import { ScrollView } from 'react-native-gesture-handler';
-import AsyncStorage from '@react-native-community/async-storage';
 
 /** Import Translations */
 import TranslateText from '../../../utils/useTranslations';
@@ -18,7 +17,6 @@ import TranslateText from '../../../utils/useTranslations';
 import GlobalVars from '../../../global/globalVars';
 
 /** Import Custom elements */
-import ButtonComponent from '../../atoms/ButtonComponent';
 import LabelTextComponent from '../../atoms/LabelText';
 import ResultSearchCard from '../../molecules/ResultSearchCard';
 

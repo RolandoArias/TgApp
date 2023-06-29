@@ -4,6 +4,7 @@ import {
 
 } from 'react-native';
 
+import { useFocusEffect } from '@react-navigation/native';
 import { ScrollView } from 'react-native-gesture-handler';
 
 /** Import Componentes Custom */
@@ -30,6 +31,15 @@ export default function LatestBuyCarouselComponent({navigation, lang = "es", use
         /** Get results */
         getResults();
     }, []);
+
+    useFocusEffect(
+        React.useCallback(() => {
+            /** Refresh result components */
+            /** Get Latest Buy */
+            getResults();
+            return () => 1;
+        }, [])
+    );
 
     const redirectPage = (id) => {
         // navigation.navigate('Category');
