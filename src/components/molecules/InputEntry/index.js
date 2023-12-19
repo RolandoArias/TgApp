@@ -120,6 +120,7 @@ const InputEntry = ({
                 value={textvariable}
                 secureTextEntry={true}
                 keyboardType={keyboard}
+                autoCapitalize="none"
                 textContentType={type}
                 maxLength={maxlong}
               />
@@ -131,6 +132,7 @@ const InputEntry = ({
                 value={textvariable}
                 secureTextEntry={false}
                 keyboardType={keyboard}
+                autoCapitalize="none"
                 textContentType={type}
                 maxLength={maxlong}
               />

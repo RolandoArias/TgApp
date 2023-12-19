@@ -54,6 +54,14 @@ const Styles = StyleSheet.create({
         marginBottom: 20
     },
 
+    customInputStyle: {
+        fontSize: 15,
+        marginBottom: 20,
+        // Aquí puedes agregar estilos específicos para el input del componente InputEntry
+        textTransform: 'lowercase',
+        // Otros estilos específicos para el input si es necesario
+      },
+
 });
 
 export default Styles;

@@ -281,6 +281,7 @@ const LoginScreen = ({ navigation }) => {
             iconName="mail"
             textvariable={mailnumber}
             setValue={setearMailnumber}
+            inputStyle={styles.customInputStyle}
           />
           <InputEntry
             label={TranslateText(lang, "Contraseña")}
