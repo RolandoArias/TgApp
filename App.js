@@ -1,11 +1,9 @@
+// App.js
 import * as React from "react";
-
 import { LogBox } from "react-native";
-
-import { useFonts } from "expo-font";
+import * as Font from 'expo-font';
 
 import * as SplashScreen from "expo-splash-screen";
-
 import RootApp from "./src/navigation/RootApp";
 import LoadScreen from "./src/screens/LoadScreen";
 
@@ -13,8 +11,9 @@ const App = () => {
   /** Ignore Yellow Box Warning */
   LogBox.ignoreAllLogs();
 
-  let [fontsLoaded] = useFonts({
-    Montserrat: require("./assets/fonts/Montserrat.ttf"),
+  let fontsLoaded = Font.loadAsync({
+    'Montserrat': require('./assets/fonts/Montserrat.ttf'),
+    // Agrega otras fuentes personalizadas según sea necesario
   });
 
   async function prepareApp() {

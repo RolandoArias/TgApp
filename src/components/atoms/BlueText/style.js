@@ -11,7 +11,6 @@ const Styles = StyleSheet.create({
         fontWeight: '800',
         marginVertical: 10
     },
-
 });
 
 export default Styles;
